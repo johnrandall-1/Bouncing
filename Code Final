@@ -1,0 +1,52 @@
+let ball1, ball2, ball3, ball4;
+
+let SPEED = 5;
+
+function setup() {
+  createCanvas(600, 600);
+  ellipseMode(RADIUS);
+  resetAllBalls()
+  
+setInterval(resetAllBalls, random(10,1000)) 
+}
+
+function draw() {
+  background(220);
+  drawBall(ball1);
+  updateBall(ball1);
+  drawBall(ball2);
+  updateBall(ball2);
+  drawBall(ball3);
+  updateBall(ball3);
+  drawBall(ball4);
+  updateBall(ball4)
+}
+
+function resetAllBalls() {
+  ball1 = createBall()
+  ball2 = createBall()
+  ball3 = createBall()  
+  ball4 = createBall()
+}
+
+
+function updateBall(ball) {
+  ball.y = ball.y + ball.dy;
+  ball.x = ball.x + ball.dx;  
+}
+
+function drawBall(ball) { ball
+  fill(ball.c);
+  circle(ball.x,ball.y,ball.radius);  
+}
+
+function createBall() {
+  let ball = {}
+  ball.c = color(random(256),random(256),random(256))
+  ball.x = random(0,width);
+  ball.y = 40;
+  ball.dx = random(0);
+  ball.dy = SPEED;
+  ball.radius = 30;  
+  return ball;
+}
