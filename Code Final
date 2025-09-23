@@ -3,15 +3,19 @@ let ball1, ball2, ball3, ball4;
 let SPEED = 5;
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(1000, 1000);
   ellipseMode(RADIUS);
   resetAllBalls()
   
-setInterval(resetAllBalls, random(10,1000)) 
+setInterval(resetBall1, random(10,3500)) 
+  setInterval(resetBall2, random(10,3500)) 
+setInterval(resetBall3, random(10,3500)) 
+setInterval(resetBall4, random(10,3500)) 
+ 
 }
 
 function draw() {
-  background(220);
+  background(20);
   drawBall(ball1);
   updateBall(ball1);
   drawBall(ball2);
@@ -28,8 +32,18 @@ function resetAllBalls() {
   ball3 = createBall()  
   ball4 = createBall()
 }
-
-
+function resetBall2(){
+  ball2 = createBall()
+}
+function resetBall3(){
+  ball3 = createBall()
+}
+function resetBall1(){
+  ball1 = createBall()
+}
+function resetBall4(){
+  ball4 = createBall()
+}
 function updateBall(ball) {
   ball.y = ball.y + ball.dy;
   ball.x = ball.x + ball.dx;  
@@ -44,8 +58,8 @@ function createBall() {
   let ball = {}
   ball.c = color(random(256),random(256),random(256))
   ball.x = random(0,width);
-  ball.y = 40;
-  ball.dx = random(0);
+  ball.y = 20;
+  ball.dx = random(-10,10);
   ball.dy = SPEED;
   ball.radius = 30;  
   return ball;
