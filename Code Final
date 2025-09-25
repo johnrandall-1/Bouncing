@@ -3,14 +3,14 @@ let ball1, ball2, ball3, ball4;
 let SPEED = 5;
 
 function setup() {
-  createCanvas(1000, 1000);
+  createCanvas(600,600);
   ellipseMode(RADIUS);
   resetAllBalls()
   
-setInterval(resetBall1, random(10,3500)) 
-  setInterval(resetBall2, random(10,3500)) 
-setInterval(resetBall3, random(10,3500)) 
-setInterval(resetBall4, random(10,3500)) 
+//setInterval(resetBall1, random(10,3500)) 
+//  setInterval(resetBall2, random(10,3500)) 
+//setInterval(resetBall3, random(10,3500)) 
+//setInterval(resetBall4, random(10,3500)) 
  
 }
 
@@ -18,14 +18,30 @@ function draw() {
   background(20);
   drawBall(ball1);
   updateBall(ball1);
+  keepInBounds(ball1);
   drawBall(ball2);
   updateBall(ball2);
+  keepInBounds(ball2);
   drawBall(ball3);
   updateBall(ball3);
+  keepInBounds(ball3);
   drawBall(ball4);
-  updateBall(ball4)
+  updateBall(ball4);
+  keepInBounds(ball4);
+ // bounceBall(ball)
+  tree(150)
 }
-
+function mouseClicked() {
+  resetAllBalls()
+}
+function tree(x){
+  fill("brown")
+  rect(x+50,600,50,-100)
+  fill("green")
+  triangle(x,500,225,400,300,500)
+  triangle(x,450,225,350,300,450)
+  triangle(x,400,225,300,300,400)
+}
 function resetAllBalls() {
   ball1 = createBall()
   ball2 = createBall()
@@ -49,18 +65,42 @@ function updateBall(ball) {
   ball.x = ball.x + ball.dx;  
 }
 
-function drawBall(ball) { ball
+function drawBall(ball) { 
   fill(ball.c);
   circle(ball.x,ball.y,ball.radius);  
 }
+function keepInBounds(ball) {
+  if(ball.x + ball.radius > 600) {
+    ball.dx = ball.dx * -1
+  }
+
+  if(ball.y + ball.radius > height) {
+    ball.dy = ball.dy * -1
+  }
+
+  if(ball.x - ball.radius < 0) {
+    ball.dx = ball.dx * -1
+  }
+
+  if(ball.y - ball.radius < 0.1) {
+    ball.dy = ball.dy * -1
+  }
+}
+//function bounceBall(ball) {
+  //if (ball.x + ball.radius = ball.x + ball.radius) {
+  //  ball.dx=ball.dx*-1
+//  }
+//}
 
 function createBall() {
   let ball = {}
   ball.c = color(random(256),random(256),random(256))
-  ball.x = random(0,width);
-  ball.y = 20;
-  ball.dx = random(-10,10);
+  ball.x = random(30,width-30);
+  ball.y = random(30,30);
+  ball.dx = random(-SPEED,SPEED);
   ball.dy = SPEED;
   ball.radius = 30;  
+  return ball;
+}
   return ball;
 }
