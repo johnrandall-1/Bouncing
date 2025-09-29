@@ -1,6 +1,6 @@
 let ball1, ball2, ball3, ball4;
 
-let SPEED = 5;
+let SPEED = 20;
 
 function setup() {
   createCanvas(600,600);
@@ -29,19 +29,18 @@ function draw() {
   updateBall(ball4);
   keepInBounds(ball4);
  // bounceBall(ball)
-  tree(150)
+ 
 }
 function mouseClicked() {
-  resetAllBalls()
+  resetBall1(x,y)
+ 
 }
-function tree(x){
-  fill("brown")
-  rect(x+50,600,50,-100)
-  fill("green")
-  triangle(x,500,225,400,300,500)
-  triangle(x,450,225,350,300,450)
-  triangle(x,400,225,300,300,400)
+
+function keyPressed(){
+  if( key === 'r')
+    resetAllBalls()
 }
+
 function resetAllBalls() {
   ball1 = createBall()
   ball2 = createBall()
@@ -54,8 +53,8 @@ function resetBall2(){
 function resetBall3(){
   ball3 = createBall()
 }
-function resetBall1(){
-  ball1 = createBall()
+function resetBall1(x,y){
+  ball1 = createBallAt(x,y)
 }
 function resetBall4(){
   ball4 = createBall()
@@ -71,7 +70,7 @@ function drawBall(ball) {
 }
 function keepInBounds(ball) {
   if(ball.x + ball.radius > 600) {
-    ball.dx = ball.dx * -1
+    ball.dx *= -1
   }
 
   if(ball.y + ball.radius > height) {
@@ -102,5 +101,13 @@ function createBall() {
   ball.radius = 30;  
   return ball;
 }
+function createBallAt(x,y) {
+  let ball = {}
+  ball.c = color(random(256),random(256),random(256))
+  ball.x = x;
+  ball.y = y;
+  ball.dx = random(-SPEED,SPEED);
+  ball.dy = SPEED;
+  ball.radius = 30;  
   return ball;
 }
