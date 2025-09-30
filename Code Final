@@ -1,113 +1,130 @@
-let ball1, ball2, ball3, ball4;
+let balls = [] 
+let initialNumberOfBalls = 5
 
-let SPEED = 20;
+const SPEED = 20
+
 
 function setup() {
-  createCanvas(600,600);
-  ellipseMode(RADIUS);
+  createCanvas(600, 600)
+  ellipseMode(RADIUS)
   resetAllBalls()
-  
-//setInterval(resetBall1, random(10,3500)) 
-//  setInterval(resetBall2, random(10,3500)) 
-//setInterval(resetBall3, random(10,3500)) 
-//setInterval(resetBall4, random(10,3500)) 
- 
 }
 
 function draw() {
-  background(20);
-  drawBall(ball1);
-  updateBall(ball1);
-  keepInBounds(ball1);
-  drawBall(ball2);
-  updateBall(ball2);
-  keepInBounds(ball2);
-  drawBall(ball3);
-  updateBall(ball3);
-  keepInBounds(ball3);
-  drawBall(ball4);
-  updateBall(ball4);
-  keepInBounds(ball4);
- // bounceBall(ball)
+  fill(0)
+  background(0)
+  
+  
+  for( let ball of balls ) { 
+    drawBall(ball)
+    updateBall(ball)
+    keepInBounds(ball)
+  }
+  
  
-}
-function mouseClicked() {
-  resetBall1(x,y)
- 
+  for( let i = 0; i < balls.length - 1; i++ ) { 
+    for( let j = i+1; j < balls.length; j++ ) {
+      bounceBalls(balls[i], balls[j])
+   }
+  }
 }
 
-function keyPressed(){
-  if( key === 'r')
-    resetAllBalls()
+
+function ballsCollide(ballA, ballB) {
+  return dist( ballA.position.x, ballA.position.y, ballB.position.x, ballB.position.y ) <= ballA.radius + ballB.radius
+}
+
+function bounceBalls(ballA, ballB) {
+  if( ballsCollide(ballA, ballB) ) {
+    ballA.velocity.x *= -1;
+  
+    ballB.velocity.x *= -1;
+   
+  }
+}
+
+
+function keepInBounds(ball) {
+  if( ball.position.x + ball.radius > width ) {
+     ball.velocity.x *= -1; 
+  }
+
+  if( ball.position.y + ball.radius > height ) {
+    ball.velocity.y *= -1; 
+  }
+
+  if( ball.position.x - ball.radius < 0 ) {
+    ball.velocity.x *= -1; 
+  }
+
+  if( ball.position.y - ball.radius < 0 ) {
+    ball.velocity.y *= -1; 
+  }
 }
 
 function resetAllBalls() {
-  ball1 = createBall()
-  ball2 = createBall()
-  ball3 = createBall()  
-  ball4 = createBall()
+  balls = [] 
+  while( balls.length < initialNumberOfBalls ) {
+    createBall()
+  }
 }
-function resetBall2(){
-  ball2 = createBall()
+
+function mouseClicked() {
+  rotateCreateBall()  
 }
-function resetBall3(){
-  ball3 = createBall()
+
+function rotateCreateBall() {
+  balls.shift() 
+  createBall() 
 }
-function resetBall1(x,y){
-  ball1 = createBallAt(x,y)
+
+function keyPressed() {
+  if( key === 'r' ) {
+    resetAllBalls()
+  }
+
+  
+  if( key === ' ' ) {
+    createBall()
+  }
 }
-function resetBall4(){
-  ball4 = createBall()
-}
+
 function updateBall(ball) {
-  ball.y = ball.y + ball.dy;
-  ball.x = ball.x + ball.dx;  
+  ball.position.y = ball.position.y + ball.velocity.y;
+  ball.position.x = ball.position.x + ball.velocity.x;  
 }
 
 function drawBall(ball) { 
   fill(ball.c);
-  circle(ball.x,ball.y,ball.radius);  
+  circle(ball.position.x,ball.position.y,ball.radius);  
 }
-function keepInBounds(ball) {
-  if(ball.x + ball.radius > 600) {
-    ball.dx *= -1
-  }
 
-  if(ball.y + ball.radius > height) {
-    ball.dy = ball.dy * -1
+function createBallAt(position) {
+  let newBall = {} 
+  
+  newBall.radius = random(20,20)
+  newBall.position = position
+  
+  for( let ball of balls ) {
+    if( ballsCollide(ball,newBall) ) {
+      return createBall()
+    }
   }
-
-  if(ball.x - ball.radius < 0) {
-    ball.dx = ball.dx * -1
+    
+  newBall.c = color(random(256),random(256),random(256))
+    
+  newBall.velocity = {
+    x: random(-SPEED,SPEED),
+    y: random(SPEED,SPEED)
   }
-
-  if(ball.y - ball.radius < 0.1) {
-    ball.dy = ball.dy * -1
-  }
+    
+  balls.push(newBall)
 }
-//function bounceBall(ball) {
-  //if (ball.x + ball.radius = ball.x + ball.radius) {
-  //  ball.dx=ball.dx*-1
-//  }
-//}
+
 
 function createBall() {
-  let ball = {}
-  ball.c = color(random(256),random(256),random(256))
-  ball.x = random(30,width-30);
-  ball.y = random(30,30);
-  ball.dx = random(-SPEED,SPEED);
-  ball.dy = SPEED;
-  ball.radius = 30;  
-  return ball;
-}
-function createBallAt(x,y) {
-  let ball = {}
-  ball.c = color(random(256),random(256),random(256))
-  ball.x = x;
-  ball.y = y;
-  ball.dx = random(-SPEED,SPEED);
-  ball.dy = SPEED;
-  ball.radius = 30;  
-  return ball;
+  createBallAt({
+    x: random(20, width-20),
+    y: random(20,20)
+  });
 }
