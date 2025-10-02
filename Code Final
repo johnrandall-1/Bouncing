@@ -1,7 +1,8 @@
 let balls = [] 
-let initialNumberOfBalls = 5
+let initialNumberOfBalls = 20
 
-const SPEED = 20
+const SPEED =5
+
 
 
 function setup() {
@@ -102,7 +103,7 @@ function drawBall(ball) {
 function createBallAt(position) {
   let newBall = {} 
   
-  newBall.radius = random(20,20)
+  newBall.radius = 10;
   newBall.position = position
   
   for( let ball of balls ) {
