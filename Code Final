@@ -1,5 +1,5 @@
 let balls = [] 
-let initialNumberOfBalls = 20
+let initialNumberOfBalls = 10
 
 const SPEED =5
 
