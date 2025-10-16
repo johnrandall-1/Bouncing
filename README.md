@@ -1,3 +1,6 @@
+# Reflection
+Reflecting on this project, I feel that I have best enjoyed problem-solving on my project, especially when dealing with collisions. I think that converting code that was already working into other types was very repetitive and made less sense than if we had just learned it the most useful way from the start of the project. Overall, I found this a very fun project, though some parts were tedious.
+
 # Screenshots
 
 <img width="1542" height="595" alt="Screenshot 2025-10-09 011228" src="https://github.com/user-attachments/assets/eeef7a14-3a95-4426-99b3-2282650087b5" />
